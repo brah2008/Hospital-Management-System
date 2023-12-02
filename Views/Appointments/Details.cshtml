@@ -2,5 +2,32 @@
 
 <h2>Appointment Details</h2>
 
-<!-- Display appointment properties -->
+<dl class="row">
+    <dt class="col-sm-2">Appointment ID</dt>
+    <dd class="col-sm-10">@Model.AppointmentId</dd>
+    
+    <dt class="col-sm-2">Date</dt>
+    <dd class="col-sm-10">@Model.AppointmentDate.ToShortDateString()</dd>
+    
+    <!-- Display other appointment properties if needed -->
+    
+    <dt class="col-sm-2">Doctor</dt>
+    <dd class="col-sm-10">@Model.Doctor.FullName</dd>
+    
+    <dt class="col-sm-2">Patient</dt>
+    <dd class="col-sm-10">@Model.Patient.FullName</dd>
+    
+    <!-- Add more details as per your data model -->
+</dl>
 
+<p>
+    <strong>Actions:</strong>
+    <br />
+    <a asp-controller="Appointment" asp-action="Edit" asp-route-id="@Model.AppointmentId">Edit</a> |
+    <form asp-controller="Appointment" asp-action="Delete" asp-route-id="@Model.AppointmentId" method="post" style="display:inline">
+        <button type="submit">Delete</button>
+    </form> |
+    <a asp-controller="Appointment" asp-action="Index">Back to List</a>
+</p>
+
+<!-- You can also include additional sections or details based on your requirements -->
