@@ -2,30 +2,40 @@
 
 <h2>Appointments</h2>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Appointment Date</th>
-            <th>Patient</th>
-            <th>Doctor</th>
-            <!-- Add more columns if needed -->
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var appointment in Model)
-        {
+<p><a asp-controller="Appointment" asp-action="Create">Create New Appointment</a></p>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
             <tr>
-                <td>@appointment.AppointmentDate.ToShortDateString()</td>
-                <td>@appointment.Patient.FullName</td>
-                <td>@appointment.Doctor.FullName</td>
-                <!-- Add more columns if needed -->
-                <td>
-                    <a asp-controller="Appointment" asp-action="Details" asp-route-id="@appointment.AppointmentId">Details</a> |
-                    <a asp-controller="Appointment" asp-action="Edit" asp-route-id="@appointment.AppointmentId">Edit</a> |
-                    <a asp-controller="Appointment" asp-action="Delete" asp-route-id="@appointment.AppointmentId">Delete</a>
-                </td>
+                <th>Date</th>
+                <th>Doctor</th>
+                <th>Patient</th>
+                <!-- Add other appointment properties if needed -->
+                <th>Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var appointment in Model)
+            {
+                <tr>
+                    <td>@appointment.AppointmentDate.ToShortDateString()</td>
+                    <td>@appointment.Doctor.FullName</td>
+                    <td>@appointment.Patient.FullName</td>
+                    <!-- Display other appointment properties if needed -->
+                    <td>
+                        <a asp-controller="Appointment" asp-action="Edit" asp-route-id="@appointment.AppointmentId">Edit</a> |
+                        <form asp-controller="Appointment" asp-action="Delete" asp-route-id="@appointment.AppointmentId" method="post" style="display:inline">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No appointments found.</p>
+}
