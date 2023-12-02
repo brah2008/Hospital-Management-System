@@ -1,0 +1,28 @@
+@model Patient
+
+<h2>@Model.FirstName @Model.LastName's Appointments</h2>
+
+@if (Model.Appointments.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Appointment Date</th>
+                <!-- Add other columns if needed -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var appointment in Model.Appointments)
+            {
+                <tr>
+                    <td>@appointment.AppointmentDate</td>
+                    <!-- Add other columns if needed -->
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No appointments found.</p>
+}
