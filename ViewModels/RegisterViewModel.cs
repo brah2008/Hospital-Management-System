@@ -9,6 +9,11 @@ public class RegisterViewModel
     public string Email { get; set; }
 
     [Required]
+    [Display(Name = "Role")]
+    public string Role { get; set; }
+
+    
+    [Required]
     [DataType(DataType.Password)]
     [Display(Name = "Password")]
     public string Password { get; set; }
