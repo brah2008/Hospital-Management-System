@@ -13,9 +13,11 @@ CREATE TABLE Doctors (
 CREATE TABLE Appointments (
     AppointmentId INT PRIMARY KEY,
     AppointmentDate DATETIME,
-    -- Other columns...
+    // Other columns...
+
     PatientId INT,
     DoctorId INT,
-    FOREIGN KEY (PatientId) REFERENCES Patients(PatientId),
-    FOREIGN KEY (DoctorId) REFERENCES Doctors(DoctorId)
+    
+    FOREIGN KEY (PatientId) REFERENCES Patients(PatientId) ON DELETE CASCADE,
+    FOREIGN KEY (DoctorId) REFERENCES Doctors(DoctorId) ON DELETE CASCADE
 );
