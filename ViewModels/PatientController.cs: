@@ -1,0 +1,31 @@
+[Authorize(Roles = "Admin, Nurse")]
+[Route("patients")]
+public class PatientController : Controller
+{
+    private readonly ApplicationDbContext _context;
+
+    public PatientController(ApplicationDbContext context)
+    {
+        _context = context;
+    }
+
+    [HttpGet("register")]
+    public IActionResult Register()
+    {
+        return View();
+    }
+
+    [HttpPost("register")]
+    [ValidateAntiForgeryToken]
+    public IActionResult Register(RegisterPatientViewModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            // Implement patient registration logic, and redirect to appropriate page
+        }
+
+        return View(model);
+    }
+
+    // Add other patient-related actions (e.g., edit, delete) as needed
+}
