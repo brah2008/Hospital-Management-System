@@ -1,0 +1,8 @@
+@model Doctors
+
+<h2>Edit Doctors</h2>
+
+<form asp-controller="Doctors" asp-action="Edit" asp-route-id="@Model.DoctorsId" method="post">
+    <!-- Form fields for patient properties with pre-filled values -->
+    <button type="submit">Save Changes</button>
+</form>

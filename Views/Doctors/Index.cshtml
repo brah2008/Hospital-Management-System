@@ -1,0 +1,29 @@
+@model List<Doctors>
+
+<h2>Doctorss</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <!-- Add more columns if needed -->
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var patient in Model)
+        {
+            <tr>
+                <td>@patient.FirstName</td>
+                <td>@patient.LastName</td>
+                <!-- Add more columns if needed -->
+                <td>
+                    <a asp-controller="Doctors" asp-action="Details" asp-route-id="@patient.DoctorsId">Details</a> |
+                    <a asp-controller="Doctors" asp-action="Edit" asp-route-id="@patient.DoctorsId">Edit</a> |
+                    <a asp-controller="Doctors" asp-action="Delete" asp-route-id="@patient.DoctorsId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
