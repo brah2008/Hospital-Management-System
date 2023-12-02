@@ -2,40 +2,99 @@
 [Route("patients")]
 public class PatientController : Controller
 {
-    private readonly PatientService _patientService;
+    private readonly ApplicationDbContext _context;
 
-    public PatientController(PatientService patientService)
+    public PatientController(ApplicationDbContext context)
     {
-        _patientService = patientService;
+        _context = context;
     }
 
-    [HttpGet]
-    public IActionResult Index()
-    {
-        var patients = _patientService.GetAllPatients();
-        return View(patients);
-    }
+    // Existing actions...
 
-    [HttpGet("{id}")]
-    public IActionResult Details(int id)
+    [HttpGet("{id}/appointments/create")]
+    public IActionResult CreateAppointment(int id)
     {
-        var patient = _patientService.GetPatientById(id);
-        if (patient == null)
-        {
-            return NotFound();
-        }
-        return View(patient);
-    }
-
-    [HttpGet("{id}/appointments")]
-    public IActionResult Appointments(int id)
-    {
-        var patient = _context.Patients.Include(p => p.Appointments).FirstOrDefault(p => p.PatientId == id);
+        var patient = _context.Patients.Find(id);
         if (patient == null)
         {
             return NotFound();
         }
 
-        return View(patient);
+        var appointment = new Appointment
+        {
+            PatientId = patient.PatientId,
+            // Set other default values for the appointment
+        };
+
+        return View(appointment);
+    }
+
+    [HttpPost("{id}/appointments/create")]
+    [ValidateAntiForgeryToken]
+    public IActionResult CreateAppointment(int id, [Bind("AppointmentDate")] Appointment appointment)
+    {
+        var patient = _context.Patients.Find(id);
+        if (patient == null)
+        {
+            return NotFound();
+        }
+
+        if (ModelState.IsValid)
+        {
+            appointment.PatientId = patient.PatientId;
+            _context.Appointments.Add(appointment);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Appointments), new { id = patient.PatientId });
+        }
+
+        return View(appointment);
+    }
+
+    [HttpGet("appointments/{appointmentId}/edit")]
+    public IActionResult EditAppointment(int appointmentId)
+    {
+        var appointment = _context.Appointments.Find(appointmentId);
+        if (appointment == null)
+        {
+            return NotFound();
+        }
+
+        return View(appointment);
+    }
+
+    [HttpPost("appointments/{appointmentId}/edit")]
+    [ValidateAntiForgeryToken]
+    public IActionResult EditAppointment(int appointmentId, [Bind("AppointmentDate")] Appointment appointment)
+    {
+        var existingAppointment = _context.Appointments.Find(appointmentId);
+        if (existingAppointment == null)
+        {
+            return NotFound();
+        }
+
+        if (ModelState.IsValid)
+        {
+            existingAppointment.AppointmentDate = appointment.AppointmentDate;
+            // Update other properties if needed
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Appointments), new { id = existingAppointment.PatientId });
+        }
+
+        return View(appointment);
+    }
+
+    [HttpPost("appointments/{appointmentId}/delete")]
+    [ValidateAntiForgeryToken]
+    public IActionResult DeleteAppointment(int appointmentId)
+    {
+        var appointment = _context.Appointments.Find(appointmentId);
+        if (appointment == null)
+        {
+            return NotFound();
+        }
+
+        _context.Appointments.Remove(appointment);
+        _context.SaveChanges();
+        return RedirectToAction(nameof(Appointments), new { id = appointment.PatientId });
     }
 }
