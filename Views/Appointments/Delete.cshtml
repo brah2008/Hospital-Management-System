@@ -1,9 +1,9 @@
-@model Appointments
+@model Appointment
 
-<h2>Delete Appointments</h2>
+<h2>Delete Appointment</h2>
 
-<p>Are you sure you want to delete this patient?</p>
+<p>Are you sure you want to delete this appointment?</p>
 
-<form asp-controller="Appointments" asp-action="Delete" asp-route-id="@Model.AppointmentsId" method="post">
-    <button type="submit">Delete</button> | <a asp-controller="Appointments" asp-action="Index">Back to List</a>
+<form asp-controller="Appointment" asp-action="Delete" asp-route-id="@Model.AppointmentId" method="post">
+    <button type="submit">Delete</button> | <a asp-controller="Appointment" asp-action="Index">Back to List</a>
 </form>
