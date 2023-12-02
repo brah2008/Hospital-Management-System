@@ -29,6 +29,7 @@ public class AccountController : Controller
 
             if (result.Succeeded)
             {
+                await _userManager.AddToRoleAsync(user, model.Role); // Assign the selected role to the user
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return RedirectToAction("Index", "Home");
             }
