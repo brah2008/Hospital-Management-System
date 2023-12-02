@@ -1,16 +1,10 @@
 [Route("appointments")]
 public class AppointmentController : Controller
 {
-    private readonly ApplicationDbContext _context;
-    private readonly PatientService _patientService;
-    private readonly DoctorService _doctorService;
     private readonly AppointmentService _appointmentService;
 
-    public AppointmentController(ApplicationDbContext context, PatientService patientService, DoctorService doctorService, AppointmentService appointmentService)
+    public AppointmentController(AppointmentService appointmentService)
     {
-        _context = context;
-        _patientService = patientService;
-        _doctorService = doctorService;
         _appointmentService = appointmentService;
     }
 
@@ -32,36 +26,5 @@ public class AppointmentController : Controller
         return View(appointment);
     }
 
-    [HttpGet("create")]
-    public IActionResult Create()
-    {
-        var patients = _patientService.GetAllPatients();
-        var doctors = _doctorService.GetAllDoctors();
-
-        ViewBag.Patients = new SelectList(patients, "PatientId", "FullName");
-        ViewBag.Doctors = new SelectList(doctors, "DoctorId", "FullName");
-
-        return View();
-    }
-
-    [HttpPost("create")]
-    [ValidateAntiForgeryToken]
-    public IActionResult Create(Appointment appointment)
-    {
-        if (ModelState.IsValid)
-        {
-            _appointmentService.AddAppointment(appointment);
-            return RedirectToAction("Index");
-        }
-
-        var patients = _patientService.GetAllPatients();
-        var doctors = _doctorService.GetAllDoctors();
-
-        ViewBag.Patients = new SelectList(patients, "PatientId", "FullName", appointment.PatientId);
-        ViewBag.Doctors = new SelectList(doctors, "DoctorId", "FullName", appointment.DoctorId);
-
-        return View(appointment);
-    }
-
-    // Similar actions for Edit, Delete, etc.
+    // Other CRUD actions...
 }
