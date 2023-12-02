@@ -149,3 +149,80 @@ Certainly! Below is a more detailed outline for each section:
    - **Encouragement:**
       - Encouraging further enhancement and customization.
 This outline provides a comprehensive guide for setting up a Hospital Management System using C# ASP.NET Core. You can expand each section with detailed explanations and code snippets according to your project's requirements.
+
+
+
+
+Certainly! Here's the continuation and expansion of the provided outline:
+### 7. Controllers (Folder):
+#### 7.1 PatientController.cs:
+```csharp
+[Route("patients")]
+public class PatientController : Controller
+{
+    private readonly ApplicationDbContext _context;
+    public PatientController(ApplicationDbContext context)
+    {
+        _context = context;
+    }
+    [HttpGet]
+    public IActionResult Index()
+    {
+        var patients = _context.Patients.ToList();
+        return View(patients);
+    }
+    [HttpGet("{id}")]
+    public IActionResult Details(int id)
+    {
+        var patient = _context.Patients.FirstOrDefault(p => p.PatientId == id);
+        if (patient == null)
+        {
+            return NotFound();
+        }
+        return View(patient);
+    }
+    // Other CRUD actions...
+}
+```
+#### 7.2 DoctorController.cs:
+```csharp
+[Route("doctors")]
+public class DoctorController : Controller
+{
+    private readonly ApplicationDbContext _context;
+    public DoctorController(ApplicationDbContext context)
+    {
+        _context = context;
+    }
+    [HttpGet]
+    public IActionResult Index()
+    {
+        var doctors = _context.Doctors.ToList();
+        return View(doctors);
+    }
+    [HttpGet("{id}")]
+    public IActionResult Details(int id)
+    {
+        var doctor = _context.Doctors.FirstOrDefault(d => d.DoctorId == id);
+        if (doctor == null)
+        {
+            return NotFound();
+        }
+        return View(doctor);
+    }
+    // Other CRUD actions...
+}
+```
+### 8. Models (Folder):
+#### 8.1 Patient.cs:
+```csharp
+public class Patient
+{
+    public int PatientId { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    // Other properties...
+    // Navigation properties
+    public ICollection<Appointment> Appointments { get; set; }
+}
+``
