@@ -1,3 +1,4 @@
+[Authorize(Roles = "Admin, Nurse")]
 [Route("appointments")]
 public class AppointmentController : Controller
 {
@@ -32,5 +33,31 @@ public class AppointmentController : Controller
         return View(appointment);
     }
 
-    // Other CRUD actions...
+    [HttpPost("create/{patientId}")]
+    [ValidateAntiForgeryToken]
+    public IActionResult Create(int patientId, AppointmentViewModel viewModel)
+    {
+        var patient = _context.Patients.Find(patientId);
+        if (patient == null)
+        {
+            return NotFound();
+        }
+
+        if (ModelState.IsValid)
+        {
+            var appointment = new Appointment
+            {
+                AppointmentDate = viewModel.AppointmentDate,
+                PatientId = patientId,
+                // Set other appointment properties
+            };
+
+            _context.Appointments.Add(appointment);
+            _context.SaveChanges();
+
+            return RedirectToAction("Appointments", "Patient", new { id = patientId });
+        }
+
+        return View(viewModel);
+    }
 }
