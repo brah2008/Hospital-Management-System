@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 public void ConfigureServices(IServiceCollection services)
 {
     // Dependency injection configuration
@@ -6,9 +9,26 @@ public void ConfigureServices(IServiceCollection services)
     services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
     // Other services...
+
+    services.AddIdentity<IdentityUser, IdentityRole>()
+        .AddEntityFrameworkStores<ApplicationDbContext>()
+        .AddDefaultTokenProviders();
+
+    // Configure cookie authentication
+    services.ConfigureApplicationCookie(options =>
+    {
+        options.Cookie.Name = "YourAppCookieName";
+        options.Cookie.HttpOnly = true;
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+        options.LoginPath = "/Account/Login";
+        options.AccessDeniedPath = "/Account/AccessDenied";
+        options.SlidingExpiration = true;
+    });
+
 }
 public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 {
+
     // Middleware configuration
     app.UseDeveloperExceptionPage();
     app.UseHttpsRedirection();
