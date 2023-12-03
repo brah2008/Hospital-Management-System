@@ -1,6 +1,7 @@
 public class DoctorService
 {
     private readonly ApplicationDbContext _context;
+    
     public DoctorService(ApplicationDbContext context)
     {
         _context = context;
