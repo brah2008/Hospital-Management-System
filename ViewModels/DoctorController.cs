@@ -21,11 +21,24 @@ public class DoctorController : Controller
     {
         if (ModelState.IsValid)
         {
-            // Implement doctor registration logic, and redirect to appropriate page
+            // Implement doctor registration logic
+            var doctor = new Doctor
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Specialization = model.Specialization
+                // Set other properties accordingly
+            };
+
+            _context.Doctors.Add(doctor);
+            _context.SaveChanges();
+
+            // Redirect to the appropriate page, e.g., doctor details or list of doctors
+            return RedirectToAction("Details", new { id = doctor.DoctorId });
         }
 
         return View(model);
     }
 
-    // Add other doctor-related actions (e.g., edit, delete) as needed
+    // Add other doctor-related actions (e.g., edit, delete, details) as needed
 }
