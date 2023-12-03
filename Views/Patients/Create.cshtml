@@ -1,8 +1,27 @@
 @model Patient
 
+@{
+    ViewData["Title"] = "Create Patient";
+}
+
 <h2>Create Patient</h2>
 
-<form asp-controller="Patient" asp-action="Create" method="post">
-    <!-- Form fields for patient properties -->
-    <button type="submit">Create</button>
+<form asp-controller="Patients" asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="FirstName">First Name:</label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="LastName">Last Name:</label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    
+    <!-- Add more form fields if needed -->
+
+    <button type="submit" class="btn btn-primary">Create</button>
 </form>
+
+<a asp-controller="Patients" asp-action="Index">Back to Patients</a>
