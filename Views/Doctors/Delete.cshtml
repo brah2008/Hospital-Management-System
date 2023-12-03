@@ -1,9 +1,21 @@
-@model Doctors
+@model YourNamespace.DoctorViewModel
 
-<h2>Delete Doctors</h2>
+<h2>Delete Doctor</h2>
 
-<p>Are you sure you want to delete this patient?</p>
+<p>Are you sure you want to delete this doctor?</p>
 
-<form asp-controller="Doctors" asp-action="Delete" asp-route-id="@Model.DoctorsId" method="post">
-    <button type="submit">Delete</button> | <a asp-controller="Doctors" asp-action="Index">Back to List</a>
+<form asp-controller="Doctors" asp-action="Delete" asp-route-id="@Model.DoctorId" method="post">
+    <div class="form-group">
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName" class="form-control" readonly />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" class="form-control" readonly />
+    </div>
+
+    <!-- Add more fields as needed -->
+
+    <button type="submit" class="btn btn-danger">Delete</button> | <a asp-controller="Doctors" asp-action="Index">Back to List</a>
 </form>
