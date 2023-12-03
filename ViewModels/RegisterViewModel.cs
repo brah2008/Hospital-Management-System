@@ -12,7 +12,6 @@ public class RegisterViewModel
     [Display(Name = "Role")]
     public string Role { get; set; }
 
-    
     [Required]
     [DataType(DataType.Password)]
     [Display(Name = "Password")]
@@ -22,21 +21,4 @@ public class RegisterViewModel
     [Display(Name = "Confirm Password")]
     [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
     public string ConfirmPassword { get; set; }
-}
-
-// LoginViewModel.cs
-public class LoginViewModel
-{
-    [Required]
-    [EmailAddress]
-    [Display(Name = "Email")]
-    public string Email { get; set; }
-
-    [Required]
-    [DataType(DataType.Password)]
-    [Display(Name = "Password")]
-    public string Password { get; set; }
-
-    [Display(Name = "Remember me")]
-    public bool RememberMe { get; set; }
 }
