@@ -1,24 +1,28 @@
-@model Patient
+@model List<Appointment>
 
-<h2>Appointments for @Model.FirstName @Model.LastName</h2>
+@{
+    ViewData["Title"] = "Patient Appointments";
+}
 
-<p><a asp-action="Index">Back to Patients</a></p>
+<h2>Appointments for @ViewData["PatientName"]</h2>
 
-@if (Model.Appointments.Any())
+@if (Model.Count > 0)
 {
     <table class="table">
         <thead>
             <tr>
                 <th>Date</th>
-                <!-- Add other appointment properties if needed -->
+                <th>Doctor</th>
+                <!-- Add more columns if needed -->
             </tr>
         </thead>
         <tbody>
-            @foreach (var appointment in Model.Appointments)
+            @foreach (var appointment in Model)
             {
                 <tr>
                     <td>@appointment.AppointmentDate.ToShortDateString()</td>
-                    <!-- Display other appointment properties if needed -->
+                    <td>@appointment.Doctor.FullName</td>
+                    <!-- Add more columns if needed -->
                 </tr>
             }
         </tbody>
@@ -28,3 +32,5 @@ else
 {
     <p>No appointments found for this patient.</p>
 }
+
+<a asp-controller="Patients" asp-action="Index">Back to Patients</a>
