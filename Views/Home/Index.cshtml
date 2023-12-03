@@ -3,4 +3,15 @@
 }
 
 <h2>Welcome to the Hospital Management System</h2>
-<p>This is the home page of your hospital management system.</p>
+<p>This is the home page of your hospital management system. You can customize this page to provide information or quick links to different sections of your application.</p>
+
+<div>
+    <h3>Quick Links:</h3>
+    <ul>
+        <li><a asp-controller="Patients" asp-action="Index">View Patients</a></li>
+        <li><a asp-controller="Doctors" asp-action="Index">View Doctors</a></li>
+        <li><a asp-controller="Appointments" asp-action="Index">View Appointments</a></li>
+        <!-- Add more links as needed -->
+    </ul>
+</div>
+
